@@ -17,6 +17,7 @@ from matplotlib.figure import Figure
 import nii_view
 from afterC_new import MeshViewer, meshio_to_vtk_unstructured_grid_max
 from beforeC_new import SimpleMeshViewer, meshio_to_vtk_unstructured_grid
+from change618 import MultiMeshViewer
 
 os.environ['VTK_SILENCE_GET_VOID_POINTER_WARNINGS'] = '1'
 os.environ['VTK_DEBUG_LEAKS'] = '0'
@@ -511,7 +512,6 @@ class MainWindow(QMainWindow):
 
     def tms_on_mesh_loaded(self, vtk_grid):
         self.loading_dialog.close()
-
         # 创建页面容器
         page_widget = QWidget()
         page_widget.setStyleSheet("background-color: #f5f5f7;")
@@ -626,15 +626,16 @@ class MainWindow(QMainWindow):
         left_layout.addWidget(self.result_button)
 
         # 右侧VTK显示区域
-        self.vtk_viewer = SimpleMeshViewer(None)
-        self.vtk_viewer.set_vtk_grid(vtk_grid)
-        self.vtk_viewer.vtk_widget.Initialize()
+
+        self.vtk_viewer = MultiMeshViewer(self.path)
+        self.vtk_viewer.interactor.Initialize()
         self.vtk_viewer.setStyleSheet("""
             QWidget {
                 background-color: white;
                 border-radius: 5px;
             }
         """)
+
 
         # 添加到主布局
         main_layout.addWidget(left_panel)
@@ -814,9 +815,9 @@ class MainWindow(QMainWindow):
         left_layout.addWidget(self.result_button)
 
         # 右侧VTK显示区域
-        self.vtk_viewer = SimpleMeshViewer(None)
-        self.vtk_viewer.set_vtk_grid(vtk_grid)
-        self.vtk_viewer.vtk_widget.Initialize()
+
+        self.vtk_viewer = MultiMeshViewer(self.path)
+        self.vtk_viewer.interactor.Initialize()
         self.vtk_viewer.setStyleSheet("""
             QWidget {
                 background-color: white;
