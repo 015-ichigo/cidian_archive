@@ -214,7 +214,16 @@ class MultiMeshViewer(QWidget):
         self.actors[index].GetProperty().SetOpacity(1.0)
         self.renderer.AddActor(self.actors[index])
 
-        filename = os.path.basename(self.mesh_filenames[index])
+        if(index ==0):
+            filename = "骨骼"
+        elif(index ==1):
+            filename = "脑脊液"
+        elif(index ==2):
+            filename = "头皮"
+        elif(index ==3):
+            filename = "灰质"
+        elif(index ==4):
+            filename = "白质"
         self.info_label.setText(f"当前显示: 模型 {index + 1} ({filename}) | 按键盘1-5切换单个模型，按0显示所有模型")
 
         self.renderer.ResetCamera()

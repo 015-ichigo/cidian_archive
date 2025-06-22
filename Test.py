@@ -16,8 +16,8 @@ from matplotlib.figure import Figure
 
 import nii_view
 from afterC_new import MeshViewer, meshio_to_vtk_unstructured_grid_max
-from beforeC_new import SimpleMeshViewer, meshio_to_vtk_unstructured_grid
-from change618 import MultiMeshViewer
+from beforeC_new import meshio_to_vtk_unstructured_grid
+from MutiImportVTK import MultiMeshViewer
 
 os.environ['VTK_SILENCE_GET_VOID_POINTER_WARNINGS'] = '1'
 os.environ['VTK_DEBUG_LEAKS'] = '0'
