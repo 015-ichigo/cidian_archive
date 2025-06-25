@@ -85,6 +85,11 @@ class MultiMeshViewer(QWidget):
         # 添加提示标签
         self.info_label = QLabel("当前显示: 所有模型 | 按键盘1-5切换单个模型，按0显示所有模型")
         self.info_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.info_label.setStyleSheet("""
+            font-family: 'DejaVu Sans';
+            font-size: 18px;
+            color: black;
+        """)
         layout.addWidget(self.info_label)
 
         # 创建VTK组件
@@ -99,9 +104,9 @@ class MultiMeshViewer(QWidget):
         self.vtk_grids = []
         self.actors = []
         self.mesh_filenames = [
+            os.path.join(mesh_path, "vtk_model/scalp.vtk"),
             os.path.join(mesh_path,"vtk_model/bone.vtk"),
             os.path.join(mesh_path, "vtk_model/csf.vtk"),
-            os.path.join(mesh_path, "vtk_model/scalp.vtk"),
             os.path.join(mesh_path, "vtk_model/gray_matter.vtk"),
             os.path.join(mesh_path, "vtk_model/white_matter.vtk"),
         ]
@@ -215,11 +220,11 @@ class MultiMeshViewer(QWidget):
         self.renderer.AddActor(self.actors[index])
 
         if(index ==0):
-            filename = "骨骼"
-        elif(index ==1):
-            filename = "脑脊液"
-        elif(index ==2):
             filename = "头皮"
+        elif(index ==1):
+            filename = "颅骨"
+        elif(index ==2):
+            filename = "脑脊液"
         elif(index ==3):
             filename = "灰质"
         elif(index ==4):

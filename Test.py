@@ -923,45 +923,56 @@ class MainWindow(QMainWindow):
         info_panel = QWidget()
         info_panel.setFixedWidth(500)  # 增加宽度以适应图表
         info_panel.setStyleSheet("""
-              QWidget {
-                  background-color: white;
-                  border-left: 1px solid #e0e0e0;
-              }
-              QLabel {
-                  font-family: 'DejaVu Sans';
-                  color: black;
-                  font-size: 14px;
-              }
-              QPushButton {
-                  background-color: #4a86e8;
-                  color: white;
-                  border: none;
-                  border-radius: 5px;
-                  padding: 10px 20px;
-                  font-size: 14px;
-                  font-weight: bold;
-              }
-              QPushButton:hover {
-                  background-color: #3a76d8;
-              }
-              QTabWidget::pane {
-                  border: 1px solid #ddd;
-                  border-radius: 5px;
-              }
-              QTabBar::tab {
-                  background: #f0f0f0;
-                  border: 1px solid #ddd;
-                  border-bottom: none;
-                  border-top-left-radius: 4px;
-                  border-top-right-radius: 4px;
-                  padding: 6px 10px;
-                  margin-right: 2px;
-              }
-              QTabBar::tab:selected {
-                  background: white;
-                  border-bottom-color: white;
-              }
-          """)
+            QWidget {
+                background-color: white;
+                border-left: 1px solid #e0e0e0;
+            }
+            QLabel {
+                font-family: 'DejaVu Sans';
+                color: black;
+                font-size: 14px;
+            }
+            QPushButton {
+                background-color: #4a86e8;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                font-size: 14px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #3a76d8;
+            }
+            QTabWidget {
+                font-family: 'DejaVu Sans';
+                font-size: 15px;
+                color: #222;
+                background: #f8f9fa;
+            }
+            QTabWidget::pane {
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+            QTabBar::tab {
+                background: #f0f0f0;
+                border: 1px solid #ddd;
+                border-bottom: none;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                padding: 6px 10px;
+                margin-right: 2px;
+                font-family: 'DejaVu Sans';
+                font-size: 15px;
+                color: #222;
+            }
+            QTabBar::tab:selected {
+                background: white;
+                border-bottom-color: white;
+                color: #4a86e8;
+                font-weight: bold;
+            }
+        """)
 
         info_layout = QVBoxLayout(info_panel)
         info_layout.setContentsMargins(20, 20, 20, 20)
@@ -1241,7 +1252,7 @@ class MainWindow(QMainWindow):
             stats_layout = QVBoxLayout(stats_tab)
 
             stats_label = QLabel("各组织电场强度统计 (V/m)")
-            stats_label.setStyleSheet("font-weight: bold; margin-bottom: 10px;")
+            stats_label.setStyleSheet("font-family: 'DejaVu Sans'; font-weight: bold; margin-bottom: 10px; color: black;")
             stats_layout.addWidget(stats_label)
 
             from PyQt6.QtWidgets import QTableWidget, QTableWidgetItem
@@ -1249,18 +1260,36 @@ class MainWindow(QMainWindow):
             stats_table.setColumnCount(5)
             stats_table.setHorizontalHeaderLabels(["组织", "最小值", "最大值", "平均值", "标准差"])
             stats_table.setRowCount(len(tissue_data))
+            stats_table.setStyleSheet("""
+                QTableWidget {
+                    font-family: 'DejaVu Sans';
+                    color: black;
+                }
+                QTableWidget::item {
+                    color: black;
+                    font-family: 'DejaVu Sans';
+                }
+                QHeaderView::section {
+                    color: black;
+                    font-family: 'DejaVu Sans';
+                }
+            """)
 
             for i, (name, arr) in enumerate(tissue_data.items()):
                 stats = compute_statistics(arr)
-                stats_table.setItem(i, 0, QTableWidgetItem(name))
-                stats_table.setItem(i, 1,
-                                    QTableWidgetItem(f"{stats['min']:.3e}" if not np.isnan(stats['min']) else "N/A"))
-                stats_table.setItem(i, 2,
-                                    QTableWidgetItem(f"{stats['max']:.3e}" if not np.isnan(stats['max']) else "N/A"))
-                stats_table.setItem(i, 3,
-                                    QTableWidgetItem(f"{stats['mean']:.3e}" if not np.isnan(stats['mean']) else "N/A"))
-                stats_table.setItem(i, 4,
-                                    QTableWidgetItem(f"{stats['std']:.3e}" if not np.isnan(stats['std']) else "N/A"))
+                item0 = QTableWidgetItem(name)
+                item1 = QTableWidgetItem(f"{stats['min']:.3e}" if not np.isnan(stats['min']) else "N/A")
+                item2 = QTableWidgetItem(f"{stats['max']:.3e}" if not np.isnan(stats['max']) else "N/A")
+                item3 = QTableWidgetItem(f"{stats['mean']:.3e}" if not np.isnan(stats['mean']) else "N/A")
+                item4 = QTableWidgetItem(f"{stats['std']:.3e}" if not np.isnan(stats['std']) else "N/A")
+                for item in [item0, item1, item2, item3, item4]:
+                    item.setForeground(Qt.GlobalColor.black)
+                    item.setFont(stats_table.font())
+                stats_table.setItem(i, 0, item0)
+                stats_table.setItem(i, 1, item1)
+                stats_table.setItem(i, 2, item2)
+                stats_table.setItem(i, 3, item3)
+                stats_table.setItem(i, 4, item4)
 
             stats_table.resizeColumnsToContents()
             stats_layout.addWidget(stats_table)
