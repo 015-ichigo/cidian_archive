@@ -111,7 +111,7 @@ class MeshLoaderThread(QThread):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("脑刺激模拟系统")
+        self.setWindowTitle("经颅磁电刺激仿真教学平台")
         self.resize(1200, 700)
         self.setStyleSheet("""
                 QMainWindow {
@@ -145,7 +145,7 @@ class MainWindow(QMainWindow):
         title_layout = QHBoxLayout()
         logo_label = QLabel("🧠")
         logo_label.setStyleSheet("font-size: 48px;")
-        title_label = QLabel("脑刺激模拟系统")
+        title_label = QLabel("经颅磁电刺激仿真教学平台")
         title_label.setStyleSheet("font-size: 32px; font-weight: bold; color: #333;")
         title_layout.addWidget(logo_label)
         title_layout.addWidget(title_label)
@@ -253,7 +253,7 @@ class MainWindow(QMainWindow):
         main_layout.addLayout(buttons_layout)
 
         # 底部版权信息
-        footer_label = QLabel("© 2025 脑刺激模拟系统 - 版本 1.0")
+        footer_label = QLabel("© 2025 经颅磁电刺激仿真教学平台 - 版本 1.0")
         footer_label.setStyleSheet("color: #999; margin-top: 20px;")
         footer_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         main_layout.addWidget(footer_label)
